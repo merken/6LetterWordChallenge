@@ -13,7 +13,7 @@ namespace WordMatcher.Core
         {
             if (String.IsNullOrEmpty(text))
                 throw new ArgumentException($"Expected a non-null, non-empty string for {nameof(text)}");
-            
+
             this.Text = text;
         }
 
@@ -30,7 +30,8 @@ namespace WordMatcher.Core
             if (String.IsNullOrEmpty(this.Text) || String.IsNullOrEmpty(other.Text))
                 return false; // Cannot combine empty or null words
 
-            if (!this.Text.EndsWith(other.Text.First()))
+            var lastChar = this.Text[^1];
+            if (!this.Text[^1].Equals(other.Text[0]))
                 return false;
 
             return (this.Text.Length + other.Text.Length - 1) == amountOfCharactersForMatches;
@@ -38,5 +39,8 @@ namespace WordMatcher.Core
 
         public int CompareTo(object? obj)
             => this.Text.CompareTo((obj as Word)?.Text);
+
+        public override string ToString()
+            => this.Text;
     }
 }

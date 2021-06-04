@@ -13,10 +13,11 @@ namespace WordMatcher.Domain.Tests
         /// A piece of functionality is only proven if there are tests...
         /// </summary>
         /// <param name="amountOfCharactersForMatches"></param>
+        /// <param name="amountOfWordPairs"></param>
         /// <param name="input"></param>
         /// <param name="expectedMatches"></param>
         [Theory]
-        [InlineData(6, new string[]
+        [InlineData(6, 2, new string[]
             {
                 "foo", "obar", "obaz", "opar", "omar", "baz", "oobar"
             },
@@ -24,12 +25,13 @@ namespace WordMatcher.Domain.Tests
             {
                 "foobar", "foobaz", "foopar", "foomar",
             })]
-        public async Task FooBar6Letters(int amountOfCharactersForMatches, string[] input, string[] expectedMatches)
+        public async Task FooBar6Letters(int amountOfCharactersForMatches, int amountOfWordPairs, string[] input,
+            string[] expectedMatches)
         {
             // Arrange
             var sut = CreateSut();
             var amountOfLetters = amountOfCharactersForMatches;
-            var options = new WordMatcherOptions(amountOfLetters);
+            var options = new WordMatcherOptions(amountOfLetters, amountOfWordPairs);
             var words = input.Select(i => new Word(i));
             var wordCollection = new WordCollection(words);
             var expected = new WordCollection(expectedMatches.Select(e => new Word(e)));

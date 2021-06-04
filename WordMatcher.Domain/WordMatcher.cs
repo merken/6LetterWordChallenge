@@ -13,12 +13,15 @@ namespace WordMatcher.Domain
         {
             var originalCollection = collection.Words;
             var amountOfCharactersForMatches = options.AmountOfCharactersForMatches;
+            var amountOfWordPairs = options.AmountOfWordPairs;
 
             var results = new List<Word>();
             var candidates = FindCandidates(originalCollection, originalCollection, amountOfCharactersForMatches);
-            while (candidates.Any())
+            var concatenations = 1;
+            while (candidates.Any() && concatenations < amountOfWordPairs)
             {
                 results.AddRange(candidates);
+                concatenations++;
                 candidates = FindCandidates(results, originalCollection, amountOfCharactersForMatches);
             }
 
